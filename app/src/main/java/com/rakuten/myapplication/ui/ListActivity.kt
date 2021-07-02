@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rakuten.myapplication.R
+import com.rakuten.myapplication.WebViewActivity
 import com.rakuten.myapplication.domain.BitBucketRepo
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -60,6 +61,8 @@ class ListActivity : AppCompatActivity(), View.OnClickListener, ListAdapter.OnLi
     }
 
     override fun onItemClick(bitBucketRepo: BitBucketRepo.Repo) {
-
+        if (bitBucketRepo.website.isNotEmpty()) {
+            startActivity(WebViewActivity.onNewIntent(this, bitBucketRepo.website))
+        }
     }
 }
