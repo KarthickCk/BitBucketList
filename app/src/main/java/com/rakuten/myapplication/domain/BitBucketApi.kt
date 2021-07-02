@@ -4,6 +4,6 @@ import io.reactivex.Single
 import retrofit2.http.GET
 
 interface BitBucketApi {
-    @GET("/repositories")
+    @GET("/2.0/repositories")
     fun getRepos(): Single<BitBucketRepo>
 }

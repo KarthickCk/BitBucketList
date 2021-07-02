@@ -1,5 +1,6 @@
 package com.rakuten.myapplication.di
 
+import com.google.gson.Gson
 import com.rakuten.myapplication.domain.BitBucketApi
 import io.reactivex.schedulers.Schedulers
 import okhttp3.HttpUrl
@@ -30,8 +31,9 @@ val networkModule = module {
     factory<BitBucketApi> {
         val builder = Retrofit.Builder()
             .client(OkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create(Gson()))
             .addCallAdapterFactory(get<RxJava2CallAdapterFactory>())
-        builder.baseUrl("https://api.bitbucket.org/2.0/").build()
+        builder.baseUrl("https://api.bitbucket.org").build()
             .create(BitBucketApi::class.java)
     }
 }
