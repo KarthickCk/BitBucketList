@@ -7,7 +7,7 @@ import io.reactivex.Single
 
 class BitBucketRepository(private val bitBucketApi: BitBucketApi) {
 
-    fun getRepoList(nextPageURL: String?): Single<Pair<List<BitBucketRepo.Repo>, String?>> {
+    fun getRepoList(nextPageURL: String? = null): Single<Pair<List<BitBucketRepo.Repo>, String?>> {
 
         val api = when (nextPageURL == null) {
             true -> bitBucketApi.getRepos()

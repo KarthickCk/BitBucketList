@@ -1,5 +1,6 @@
 package com.rakuten.myapplication.ui
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rakuten.myapplication.data.BitBucketRepository
@@ -12,7 +13,9 @@ class BitBucketViewModel(
 
     private val compositeDisposable = CompositeDisposable()
     val listItem = MutableLiveData<UIState>()
-    private var nextPageURL: String? = null
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var nextPageURL: String? = null
 
     fun getRepos() {
         compositeDisposable.add(
