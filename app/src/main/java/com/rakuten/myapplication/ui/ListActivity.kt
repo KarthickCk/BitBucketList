@@ -9,10 +9,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ListActivity : AppCompatActivity() {
 
     private val bitBucketViewModel by viewModel<BitBucketViewModel>()
+    private val listAdapter = ListAdapter(bitBucketViewModel)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        observeData()
         bitBucketViewModel.getRepos()
     }
 
