@@ -13,7 +13,7 @@ data class BitBucketRepo(
         @SerializedName("name")
         val name: String,
         @SerializedName("website")
-        val website: String,
+        val website: String?,
         @SerializedName("type")
         val type: String,
         @SerializedName("links")

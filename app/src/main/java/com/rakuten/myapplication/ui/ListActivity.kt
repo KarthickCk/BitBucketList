@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,6 +53,8 @@ class ListActivity : AppCompatActivity(), View.OnClickListener, ListAdapter.OnLi
                     nextPage.visibility = View.GONE
                 else
                     nextPage.visibility = View.VISIBLE
+            } else if (it is BitBucketViewModel.UIState.Error) {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -61,7 +64,7 @@ class ListActivity : AppCompatActivity(), View.OnClickListener, ListAdapter.OnLi
     }
 
     override fun onItemClick(bitBucketRepo: BitBucketRepo.Repo) {
-        if (bitBucketRepo.website.isNotEmpty()) {
+        if (!bitBucketRepo.website.isNullOrEmpty()) {
             startActivity(WebViewActivity.onNewIntent(this, bitBucketRepo.website))
         }
     }
