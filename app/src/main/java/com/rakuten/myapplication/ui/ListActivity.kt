@@ -9,12 +9,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rakuten.myapplication.R
+import com.rakuten.myapplication.domain.BitBucketRepo
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListActivity : AppCompatActivity(), View.OnClickListener {
+class ListActivity : AppCompatActivity(), View.OnClickListener, ListAdapter.OnListItemClick {
 
     private val bitBucketViewModel by viewModel<BitBucketViewModel>()
-    private lateinit var listAdapter: ListAdapter
+    private val listAdapter = ListAdapter(this)
     private lateinit var progressBar: ProgressBar
     private lateinit var nextPage: Button
 
@@ -30,7 +31,7 @@ class ListActivity : AppCompatActivity(), View.OnClickListener {
         progressBar = findViewById(R.id.progress)
         nextPage = findViewById(R.id.next_page)
         nextPage.setOnClickListener(this)
-        listAdapter = ListAdapter(bitBucketViewModel)
+
         val list = findViewById<RecyclerView>(R.id.list)
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = listAdapter
@@ -56,5 +57,9 @@ class ListActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         bitBucketViewModel.getRepos()
+    }
+
+    override fun onItemClick(bitBucketRepo: BitBucketRepo.Repo) {
+
     }
 }

@@ -3,7 +3,7 @@ package com.rakuten.myapplication.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rakuten.myapplication.data.BitBucketRepository
-import com.rakuten.myapplication.domain.IListItem
+import com.rakuten.myapplication.domain.BitBucketRepo
 import io.reactivex.disposables.CompositeDisposable
 
 class BitBucketViewModel(
@@ -33,7 +33,7 @@ class BitBucketViewModel(
     }
 
     sealed class UIState {
-        class BitBucketList(val list: List<IListItem>) : UIState()
+        class BitBucketList(val list: List<BitBucketRepo.Repo>) : UIState()
         class Error(val message: String) : UIState()
         class Loading(val isLoading: Boolean) : UIState()
         class HideNextButton(val hide: Boolean) : UIState()

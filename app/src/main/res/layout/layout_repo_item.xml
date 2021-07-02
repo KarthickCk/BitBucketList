@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.rakuten.myapplication.domain.BitBucketListItem" />
+            type="com.rakuten.myapplication.domain.BitBucketRepo.Repo" />
 
     </data>
 
@@ -28,7 +28,7 @@
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:loadSrc="@{data.repo.Links.Href.avatar}" />
+                app:loadSrc="@{data.Links.Href.avatar}" />
 
             <Space
                 android:id="@+id/space1"
@@ -43,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:text="@{data.repo.name}"
+                android:text="@{data.name}"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constrainedHeight="true"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:maxLines="2"
-                android:text="@{data.repo.type}"
+                android:text="@{data.type}"
                 android:textSize="15sp"
                 app:layout_constrainedHeight="true"
                 app:layout_constrainedWidth="true"
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:maxLines="2"
-                android:text="@{data.repo.date.toString()}"
+                android:text="@{data.date.toString()}"
                 android:textSize="15sp"
                 app:layout_constrainedHeight="true"
                 app:layout_constrainedWidth="true"
