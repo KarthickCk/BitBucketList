@@ -1,9 +1,9 @@
 package com.rakuten.myapplication.domain
 
-import com.rakuten.myapplication.data.BitBucketRepo
+import io.reactivex.Single
 import retrofit2.http.GET
 
 interface BitBucketApi {
     @GET("/repositories")
-    fun getRepos(): List<BitBucketRepo>
+    fun getRepos(): Single<BitBucketRepo>
 }
