@@ -11,23 +11,83 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="15dp">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{data.repo.name}"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constrainedHeight="true"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Name" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadSrc="@{data.repo.Links.Href.avatar}" />
+
+            <Space
+                android:id="@+id/space1"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/user_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="@{data.repo.name}"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constrainedHeight="true"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHeight_default="wrap"
+                app:layout_constraintStart_toEndOf="@id/space1"
+                app:layout_constraintTop_toTopOf="@id/user_image"
+                app:layout_constraintWidth_default="wrap"
+                tools:text="Name" />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:text="@{data.repo.type}"
+                android:textSize="15sp"
+                app:layout_constrainedHeight="true"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHeight_default="wrap"
+                app:layout_constraintStart_toEndOf="@id/space1"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                app:layout_constraintWidth_default="wrap"
+                tools:text="Type" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:text="@{data.repo.date.toString()}"
+                android:textSize="15sp"
+                app:layout_constrainedHeight="true"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintHeight_default="wrap"
+                app:layout_constraintStart_toEndOf="@id/space1"
+                app:layout_constraintTop_toBottomOf="@id/type"
+                app:layout_constraintWidth_default="wrap"
+                tools:text="Date" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </layout>

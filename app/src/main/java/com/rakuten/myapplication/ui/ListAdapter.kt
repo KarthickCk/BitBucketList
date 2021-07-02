@@ -33,4 +33,10 @@ class ListAdapter(
     }
 
     override fun getItemCount() = repoList.size
+
+    fun notifyAdapter(list: List<IListItem>) {
+        val prevPosition = repoList.size
+        repoList.addAll(list)
+        notifyItemInserted(prevPosition)
+    }
 }

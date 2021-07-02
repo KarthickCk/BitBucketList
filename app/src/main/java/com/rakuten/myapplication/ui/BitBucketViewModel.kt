@@ -1,6 +1,5 @@
 package com.rakuten.myapplication.ui
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rakuten.myapplication.data.BitBucketRepository
@@ -13,20 +12,31 @@ class BitBucketViewModel(
 
     private val compositeDisposable = CompositeDisposable()
     val listItem = MutableLiveData<UIState>()
+    private var nextPageURL: String? = null
 
-    fun getRepos(nextPageURL: String? = null) {
-        compositeDisposable.add(bitBucketRepository.getRepoList(nextPageURL)
-            .subscribe({
-                listItem.value = UIState.BitBucketList(it)
-            }, {
-                listItem.value = UIState.Error(it.localizedMessage)
-            })
+    fun getRepos() {
+        compositeDisposable.add(
+            bitBucketRepository.getRepoList(nextPageURL)
+                .doOnSubscribe {
+                    listItem.value = UIState.Loading(true)
+                }
+                .subscribe({
+                    listItem.value = UIState.Loading(false)
+                    listItem.value = UIState.BitBucketList(it.first)
+                    this.nextPageURL = it.second
+                    listItem.value = UIState.HideNextButton(it.second == null)
+                }, {
+                    listItem.value = UIState.Loading(false)
+                    listItem.value = UIState.Error(it.localizedMessage)
+                })
         )
     }
 
     sealed class UIState {
-        class BitBucketList(list: List<IListItem>) : UIState()
+        class BitBucketList(val list: List<IListItem>) : UIState()
         class Error(val message: String) : UIState()
+        class Loading(val isLoading: Boolean) : UIState()
+        class HideNextButton(val hide: Boolean) : UIState()
     }
 
     override fun onCleared() {
