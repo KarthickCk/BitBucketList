@@ -1,7 +1,6 @@
 package com.rakuten.myapplication.ui
 
 import com.rakuten.myapplication.BaseTest
-import com.rakuten.myapplication.data.BitBucketRepository
 import com.rakuten.myapplication.domain.BitBucketRepo
 import io.reactivex.Single
 import org.junit.Assert

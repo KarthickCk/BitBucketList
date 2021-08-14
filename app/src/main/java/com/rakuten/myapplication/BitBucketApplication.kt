@@ -1,24 +1,14 @@
 package com.rakuten.myapplication
 
 import android.app.Application
-import com.rakuten.myapplication.di.networkModule
-import com.rakuten.myapplication.di.repositoryModules
-import com.rakuten.myapplication.di.viewModelModules
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
-class BitBucketApplication : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        startKoin {
-            androidContext(this@BitBucketApplication)
-            modules(
-                listOf(
-                    networkModule,
-                    repositoryModules,
-                    viewModelModules
-                )
-            )
-        }
+class BitBucketApplication: Application() {
+
+    private val executor: ExecutorService = Executors.newFixedThreadPool(4)
+
+    fun getExecutor(): ExecutorService {
+        return executor
     }
 }
