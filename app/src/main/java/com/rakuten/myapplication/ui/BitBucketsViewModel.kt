@@ -10,8 +10,10 @@ class BitBucketsViewModel(val bitBucketRepositor: BitBucketRepositor): ViewModel
     val repositoryList: MutableLiveData<List<BitBucketRepo.Repo>> = MutableLiveData()
 
     fun getRepoList() {
-        bitBucketRepositor.getRepoList {
-            repositoryList.postValue(it)
+        bitBucketRepositor.getRepoList { list, exception ->
+            if (exception == null) {
+                repositoryList.postValue(list)
+            }
         }
     }
 

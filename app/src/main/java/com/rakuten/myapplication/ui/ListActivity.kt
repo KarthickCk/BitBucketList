@@ -14,6 +14,7 @@ import com.rakuten.myapplication.BitBucketApplication
 import com.rakuten.myapplication.R
 import com.rakuten.myapplication.data.BitBucketRepositor
 import com.rakuten.myapplication.domain.BitBucketRepo
+import com.rakuten.myapplication.networking.RetrofitModule
 import java.util.concurrent.ExecutorService
 
 class ListActivity : AppCompatActivity(), View.OnClickListener, ListAdapter.OnListItemClick {
@@ -30,7 +31,7 @@ class ListActivity : AppCompatActivity(), View.OnClickListener, ListAdapter.OnLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         executorService = (application as BitBucketApplication).getExecutor()
-        bitBucketRepositor = BitBucketRepositor(executorService, gson)
+        bitBucketRepositor = BitBucketRepositor(executorService, RetrofitModule.getBitBucketApi())
         bitBucketsViewModel = ViewModelProvider(this,
             BitBucketsViewModel.MyBitBucketViewModel(bitBucketRepositor)).get(BitBucketsViewModel::class.java)
         setViews()

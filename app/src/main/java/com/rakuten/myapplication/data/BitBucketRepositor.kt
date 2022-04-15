@@ -3,6 +3,10 @@ package com.rakuten.myapplication.data
 import android.util.Log
 import com.google.gson.Gson
 import com.rakuten.myapplication.domain.BitBucketRepo
+import com.rakuten.myapplication.networking.BitBucketApi
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.*
 import java.lang.Exception
 import java.net.URL
@@ -11,34 +15,28 @@ import javax.net.ssl.HttpsURLConnection
 
 class BitBucketRepositor(
     private val executorService: ExecutorService,
-    private val gson: Gson
+    private val bitBucketApi: BitBucketApi
 ) {
 
     fun getRepoList(
-        callback: (List<BitBucketRepo.Repo>) -> Unit
+        callback: (List<BitBucketRepo.Repo>, Throwable?) -> Unit
     ) {
         executorService.execute {
-            val api = "https://api.bitbucket.org/2.0/repositories"
-            val url = URL(api)
-            var byteArrayInputStream: BufferedReader? = null
-            (url.openConnection() as HttpsURLConnection).run {
-                try {
-                    requestMethod = "GET"
-                    val byteArrayInputStream = BufferedReader(InputStreamReader(inputStream))
-                    val builder = StringBuilder()
-                    var line: String?
-                    while (byteArrayInputStream.readLine().also { line = it } != null) {
-                        builder.append(line)
+            bitBucketApi.getRepositories().enqueue(object: Callback<BitBucketRepo> {
+                override fun onResponse(
+                    call: Call<BitBucketRepo>,
+                    response: Response<BitBucketRepo>
+                ) {
+                    if (response.isSuccessful) {
+                        callback.invoke(response.body()?.repos!!, null)
                     }
-                    val bitBucketRepo = gson.fromJson(builder.toString(), BitBucketRepo::class.java)
-                    callback.invoke(bitBucketRepo.repos)
-                } catch (exception: Exception) {
-                    Log.e("------>", "---->" + exception)
-                } finally {
-                    byteArrayInputStream?.close()
-                    disconnect()
                 }
-            }
+
+                override fun onFailure(call: Call<BitBucketRepo>, t: Throwable) {
+                    callback.invoke(emptyList(), t)
+                }
+
+            })
         }
     }
 }
